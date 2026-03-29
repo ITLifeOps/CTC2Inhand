@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <thead>
                         <tr>
                             <th>Type</th>
-                            <th>Gross (Monthly, accurate)</th>
+                            <th>Gross (Monthly, Accurate)</th>
                             <th>In-Hand (Net, Estimate)</th>
                         </tr>
                     </thead>

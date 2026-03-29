@@ -115,8 +115,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     <ul>
                       <li>Professional Tax will get deduct in every month</li>
                       <li>Labour WellFare</li>
-                      <li>Health Insurance Premium will get deduct as per option selected in 2 months, 4m months or 8 months </li>
+                      <li>Health Insurance Premium will get deduct as per option selected in 2 months, 4 months or 8 months </li>
                       <li>Income Tax deduction depends on specific Tax Slab and selected Tax Regime </li>
+                      <li>The specified retention incentive is paid as a single annual installment.</li>
                     </ul> 
                 </div>
             </div>

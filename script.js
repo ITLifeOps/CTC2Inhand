@@ -10,33 +10,33 @@ document.addEventListener('DOMContentLoaded', () => {
             contentArea.innerHTML = `
                 <div class="form-container">
                     <div class="form-group">
-                        <label>Total / Gross Annual Salary <span style="color:red">*</span></label>
+                        <label>Total / Gross Annual Salary <span class="info-icon" data-tooltip="Total Salary, not the CTC. Please check in the Offer Letter or Compensation Letter.">ⓘ</span> <span style="color:red">*</span></label>
                         <input type="number" id="totalSalary" placeholder="Enter Annual Amount">
                         <div id="salaryError" style="color:red; font-size:0.8rem; margin-top:5px;" class="hidden">Please enter a valid salary.</div>
                     </div>
 
                     <div class="checkbox-group">
                         <input type="checkbox" id="hasRetention">
-                        <label for="hasRetention" style="cursor:pointer; margin:0;">Does Total Salary includes Retention Incentive?</label>
+                        <label for="hasRetention" style="cursor:pointer; margin:0;">Does Total Salary includes Retention Incentive? </label>
                     </div>
 
                     <div id="retentionDiv" class="form-group hidden">
-                        <label>Annual Retention Amount</label>
+                        <label>Retention Amount <span class="info-icon" data-tooltip="Retention Incentive, not Elective Incentive. Please check in the Offer Letter or Compensation Letter.">ⓘ</span> </label>
                         <input type="number" id="retentionAmount" value="0">
                     </div>
 
                     <div class="form-group">
-                        <label>Annual Gratuity Amount</label>
+                        <label>Gratuity Amount <span class="info-icon" data-tooltip="Gratuity Amount. Please check in the Offer Letter or Compensation Letter.">ⓘ</span> </label>
                         <input type="number" id="gratuity" value="0">
                     </div>
 
                     <div class="form-group">
-                        <label>Annual PF Amount</label>
+                        <label>PF Amount <span class="info-icon" data-tooltip="Provident Fund Amount. Please check in the Offer Letter or Compensation Letter.">ⓘ</span> </label>
                         <input type="number" id="pfAmount" value="0">
                     </div>
 
                     <div class="form-group">
-                        <label>Annual Performance Bonus</label>
+                        <label>Performance Bonus <span class="info-icon" data-tooltip="Only Performance Bonus Amount, not the Montly Performance Bonus. Please check in the Offer Letter or Compensation Letter.">ⓘ</span> </label>
                         <input type="number" id="performanceBonus" value="0">
                     </div>
 
@@ -80,22 +80,44 @@ document.addEventListener('DOMContentLoaded', () => {
         const retention = (retentionCheck && retentionCheck.checked) ? parseFloat(document.getElementById('retentionAmount').value) || 0 : 0;
 
         // Math Logic
-        const annualLiquid = total - retention - gratuity - (pf * 2) - perfBonus;
-        const monthlyInHand = annualLiquid / 12;
-        const quarterlyPayout = monthlyInHand + (perfBonus / 4);
+        const annualLiquid = total - retention - gratuity - pf - perfBonus;
+        const monthlyGross = annualLiquid / 12;
+        const monthlyInHand = monthlyGross - (pf / 12);
+        const quarterlyGross = monthlyGross + (perfBonus / 4);
+        const quarterlyInhand = quarterlyGross - (pf / 12);
 
         document.getElementById('resultArea').innerHTML = `
-            <div class="results">
-                <div class="res-line">
-                    <span>Monthly In-Hand:</span>
-                    <span class="highlight">₹${Math.round(monthlyInHand).toLocaleString('en-IN')}</span>
-                </div>
+            <div class="results fade-in">
+                <table class="salary-table">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Gross (Monthly, accurate)</th>
+                            <th>In-Hand (Net, Estimate)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="bonus-row">
+                            <td>Quarterly Month <span class="info-icon" data-tooltip="Every quaters First months Salary Estimated">ⓘ</span> </td>
+                            <td>₹${Math.round(quarterlyGross).toLocaleString('en-IN')}</td>
+                            <td class="highlight">₹${Math.round(quarterlyInhand).toLocaleString('en-IN')}</td>
+                        </tr>
+                        <tr>
+                            <td>Standard Month <span class="info-icon" data-tooltip="Every quaters second and third months Salary Estimated">ⓘ</span> </td>
+                            <td>₹${Math.round(monthlyGross).toLocaleString('en-IN')}</td>
+                            <td class="highlight">₹${Math.round(monthlyInHand).toLocaleString('en-IN')}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
                 <div class="warning-box">
-                    <strong>Notice:</strong> Estimate only. Excludes PT, Insurance, and TDS.
-                </div>
-                <div class="res-line" style="margin-top:15px; border-top: 1px solid #bdd1f3; padding-top: 10px;">
-                    <span>Quarterly Bonus Month:</span>
-                    <span class="highlight">₹${Math.round(quarterlyPayout).toLocaleString('en-IN')}</span>
+                    <strong>Note:</strong> These result are Estimation. Few deduction are not in calculation such as:
+                    <ul>
+                      <li>Professional Tax will get deduct in every month</li>
+                      <li>Labour WellFare</li>
+                      <li>Health Insurance Premium will get deduct as per option selected in 2 months, 4m months or 8 months </li>
+                      <li>Income Tax deduction depends on specific Tax Slab and selected Tax Regime </li>
+                    </ul> 
                 </div>
             </div>
         `;

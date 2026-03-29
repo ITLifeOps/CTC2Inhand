@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     companySelect.addEventListener('change', () => {
         const company = companySelect.value;
-        contentArea.innerHTML = ''; 
+        contentArea.innerHTML = '';
 
         if (company === 'tcs') {
             contentArea.innerHTML = `
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     <div class="checkbox-group">
                         <input type="checkbox" id="hasRetention">
-                        <label for="hasRetention" style="cursor:pointer; margin:0;">Includes Retention Incentive?</label>
+                        <label for="hasRetention" style="cursor:pointer; margin:0;">Does Total Salary includes Retention Incentive?</label>
                     </div>
 
                     <div id="retentionDiv" class="form-group hidden">
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
 
                     <div class="form-group">
-                        <label>Annual PF Amount (Employee + Employer)</label>
+                        <label>Annual PF Amount</label>
                         <input type="number" id="pfAmount" value="0">
                     </div>
 
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
 
             // Attach event listeners to new elements
-            document.getElementById('hasRetention').addEventListener('change', function() {
+            document.getElementById('hasRetention').addEventListener('change', function () {
                 document.getElementById('retentionDiv').classList.toggle('hidden', !this.checked);
             });
 
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function calculateTCS() {
         const salaryInput = document.getElementById('totalSalary');
         const salaryError = document.getElementById('salaryError');
-        
+
         if (!salaryInput.value || parseFloat(salaryInput.value) <= 0) {
             salaryError.classList.remove('hidden');
             salaryInput.style.borderColor = 'red';
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const gratuity = parseFloat(document.getElementById('gratuity').value) || 0;
         const pf = parseFloat(document.getElementById('pfAmount').value) || 0;
         const perfBonus = parseFloat(document.getElementById('performanceBonus').value) || 0;
-        
+
         const retentionCheck = document.getElementById('hasRetention');
         const retention = (retentionCheck && retentionCheck.checked) ? parseFloat(document.getElementById('retentionAmount').value) || 0 : 0;
 

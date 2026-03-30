@@ -74,7 +74,7 @@ input[type="number"] {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 button {
@@ -219,7 +219,7 @@ button {
 .info-icon:hover::before {
     opacity: 1;
     visibility: visible;
-    transform: translateX(-50%) translateY(-5px);
+    transform: translateX(-20%) translateY(-5px);
 }
 
 .salary-table {
